@@ -9,7 +9,9 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-app.get("/",loginController.loginController);
+app.get("/",(req, res) => {
+  res.render("register");
+});
 
 app.post("/",formController.formController);
 app.listen(3000, () => {
