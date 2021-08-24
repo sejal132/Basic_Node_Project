@@ -10,8 +10,18 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.get("/",(req, res) => {
-  res.render("dashboard");
+  res.render("login");
 });
+
+app.post("/login", loginController.loginController);
+
+app.get("/dashboard", (req, res) => {
+  res.render("dashboard");
+})
+
+app.get("/register", (req, res) => {
+  res.render("register");
+})
 
 app.post("/",formController.formController);
 app.listen(3000, () => {

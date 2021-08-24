@@ -1,8 +1,5 @@
-const loginController=(req,res)=>{
-    obj={u:"No value",p:"No value"}
-    res.render("login",obj);
-    
-    
-
+const loginController = (req, res) => {
+    res.redirect("/dashboard");
 }
-module.exports={loginController}
+
+module.exports = { loginController }
