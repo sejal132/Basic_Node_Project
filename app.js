@@ -1,38 +1,38 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const loginController = require("./controllers/loginController");
-const formController = require("./controllers/formController");
 const registerController = require("./controllers/registerController");
+const dashboardController = require("./controllers/dashboardController");
 
+// Connect to database
 mongoose.connect("mongodb://localhost:27017/loginAppDB", {
   useNewUrlParser: true,
 });
 
+// Initiate server
 const app = express();
 
+// Middlewares
 app.set("view engine", "ejs");
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded());
+app.use(express.json());
 app.use(express.static("public"));
 
-app.get("/", (req, res) => {
-  res.render("login");
-});
+// Default
+app.get("/", (req, res) => res.redirect("/login"));
 
-app.post("/login", loginController.loginController);
-app.post("/register", registerController.registerController);
+// Login controllers
+app.get("/login", loginController.loginController);
+app.post("/login", loginController.loginFormController);
 
-app.get("/dashboard", (req, res) => {
-  console.log(req.query, req.query.lastname);
-  const obj=req.query;
-  res.render("dashboard",{obj:obj});
-});
+// Dashboard controller
+app.get("/dashboard", dashboardController.dashboardController);
 
-app.get("/register", (req, res) => {
-  res.render("register");
-});
+// Register controllers
+app.get("/register", registerController.registerController);
+app.post("/register", registerController.registerFormController);
 
-app.post("/", formController.formController);
+// Start server on localhost
 app.listen(3000, () => {
-  console.log("Server started on port 3000");
+  console.log("Server started on http://localhost:3000");
 });
